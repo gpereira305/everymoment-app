@@ -1,3 +1,4 @@
+import cuid from 'cuid'
 import React, { Component } from 'react'
 import { Button, Grid } from 'semantic-ui-react'
 import EventList from '../../EventList/EventList'
@@ -70,6 +71,17 @@ const eventsFromDashboard = [
    }))
  }
 
+
+ handleCreateEvent = (newEvent) => {
+    newEvent.id = cuid();
+    newEvent.hostPhotoURL = '/assets/user.png';
+    this.setState(({events}) => ({
+      events: [...events, newEvent],
+      isOpen: false
+    }))
+ }
+
+
   render() {
 
     const {events, isOpen} = this.state; 
@@ -90,6 +102,7 @@ const eventsFromDashboard = [
                   {
                     isOpen && 
                     <EventForm
+                       createEvent={this.handleCreateEvent}
                        cancelFormOpen={this.handleIsOpenToggle}
                     />
                   }
