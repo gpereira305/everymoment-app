@@ -1,7 +1,7 @@
 import cuid from 'cuid'
 import React, { Component } from 'react'
 import { Button, Grid } from 'semantic-ui-react'
-import EventList from '../../EventList/EventList'
+import EventList from '../../events/EventList/EventList';
 import EventForm from '../EventFrom/EventForm'
 
 
