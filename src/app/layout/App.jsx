@@ -9,6 +9,7 @@ import Navbar from '../../features/events/nav/NavBar/NavBar';
 import PeopleDashboard from '../../features/events/user/PeopleDashboard/PeopleDashbord';
 import SettingsDashboard from '../../features/events/user/settings/SettingsDasboard';
 import UserDetailedPage from '../../features/events/user/UserDatailed/UserDetailedPage';
+import TestComponent from '../../features/testarea/TestComponent';
 
 
 
@@ -29,6 +30,7 @@ import UserDetailedPage from '../../features/events/user/UserDatailed/UserDetail
               <Route path='/profile/:id' component={UserDetailedPage}/> 
               <Route path='/settings' component={SettingsDashboard}/> 
               <Route path='/createEvent' component={EventForm}/> 
+              <Route path='/test' component={TestComponent}/> 
             </Container>
           </Fragment>
          )}
