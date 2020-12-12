@@ -36,6 +36,7 @@ import SignedOutMenu from '../Menus/SignedOutMenu';
                   </Menu.Item>
                   <Menu.Item
                      as={NavLink}
+                     exact
                      to='/events'
                      name="Events"
                   />
