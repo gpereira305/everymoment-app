@@ -117,3 +117,10 @@ body {
 .dropzone--isActive {
     border: dashed 3px green;
 }
+
+
+/* Form */
+
+.ui.form {
+    padding: .5rem 0!important;
+}
