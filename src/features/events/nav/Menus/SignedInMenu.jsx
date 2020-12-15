@@ -6,12 +6,12 @@ import { Dropdown, Image, Menu } from 'semantic-ui-react'
 
 
 
-const SignedInMenu = ({signOut}) => {
+const SignedInMenu = ({signOut, currentUser}) => {
     return (
          
              <Menu.Item position="right">
                <Image avatar spaced="right" src='/assets/user.png' />
-               <Dropdown pointing="top left" text="Username">
+               <Dropdown pointing="top left" text={currentUser}>
                  <Dropdown.Menu>
                    <Dropdown.Item text="Create Event" icon="plus" />
                    <Dropdown.Item text="My Events" icon="calendar" />

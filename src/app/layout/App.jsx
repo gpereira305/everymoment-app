@@ -9,6 +9,7 @@ import Navbar from '../../features/events/nav/NavBar/NavBar';
 import PeopleDashboard from '../../features/events/user/PeopleDashboard/PeopleDashbord';
 import SettingsDashboard from '../../features/events/user/settings/SettingsDasboard';
 import UserDetailedPage from '../../features/events/user/UserDatailed/UserDetailedPage';
+import ModalManager from '../../features/modals/ModalManager';
 import TestComponent from '../../features/testarea/TestComponent';
 
 
@@ -19,6 +20,7 @@ import TestComponent from '../../features/testarea/TestComponent';
     return (
 
          <Fragment> 
+          <ModalManager/>
            <Route exact path='/' component={HomePage}/>
            <Route path='/(.+)' render={() => (
           <Fragment>
