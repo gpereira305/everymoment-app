@@ -2,13 +2,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import {Grid } from 'semantic-ui-react'
+import LoadingComponent from '../../../app/layout/LoadingComponent';
 import EventList from '../../events/EventList/EventList'; 
 import {createEvent, updateEvent, deleteEvent} from '../eventActions';
 
 
 
  const mapState = (state) => ({
-   events: state.events
+   events: state.events,
+   loading: state.async.loading 
  })
 
 
@@ -28,10 +30,11 @@ import {createEvent, updateEvent, deleteEvent} from '../eventActions';
  
 
   render() {
-    const {events} = this.props;
-
-    return (
-      <>
+    const {events, loading} = this.props;
+       
+      if(loading) return <LoadingComponent/> 
+    return ( 
+      
         <Grid>
             <Grid.Column width={10}>
                   <EventList 
@@ -42,9 +45,8 @@ import {createEvent, updateEvent, deleteEvent} from '../eventActions';
             <Grid.Column width={6}>
                <h2>Activity Feed</h2>
             </Grid.Column>
-        </Grid>
-      </>
-    )
+        </Grid> 
+    );
   }
 }
 

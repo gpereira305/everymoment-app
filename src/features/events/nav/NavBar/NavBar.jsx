@@ -54,26 +54,31 @@ const mapState = (state) => ({
                      to='/events'
                      name="Events"
                   />
-                  <Menu.Item
-                     as={NavLink}
-                     to='/people'
-                     name="People"
-                  />
-                  <Menu.Item
-                     as={NavLink}
-                     to='/test'
-                     name="Test"
-                  />
-                  <Menu.Item>
-                    <Button
-                       as={Link}
-                       to='/createEvent'
-                       floated="right"
-                       positive
-                       inverted 
-                       content="Create Event"
-                    />
-                  </Menu.Item>
+                    {
+                      authenticated &&
+                      <>
+                      <Menu.Item
+                            as={NavLink}
+                            to='/people'
+                            name="People"
+                          />
+                          <Menu.Item
+                            as={NavLink}
+                            to='/test'
+                            name="Test"
+                          />
+                          <Menu.Item>
+                            <Button
+                              as={Link}
+                              to='/createEvent'
+                              floated="right"
+                              positive
+                              inverted 
+                              content="Create Event"
+                            />
+                          </Menu.Item>
+                      </>
+                    }  
                     {authenticated ? 
                       <SignedInMenu
                         signOut={this.handleSignOut}
