@@ -1,15 +1,17 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
 import {Grid } from 'semantic-ui-react'
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import EventList from '../../events/EventList/EventList'; 
 import {createEvent, updateEvent, deleteEvent} from '../eventActions';
+import EventActivity from '../EventActivity/EventActivity';
 
 
 
  const mapState = (state) => ({
-   events: state.events,
+   events: state.firestore.ordered.events,
    loading: state.async.loading 
  })
 
@@ -43,7 +45,7 @@ import {createEvent, updateEvent, deleteEvent} from '../eventActions';
                   />
             </Grid.Column>
             <Grid.Column width={6}>
-               <h2>Activity Feed</h2>
+               <EventActivity/>
             </Grid.Column>
         </Grid> 
     );
@@ -51,4 +53,7 @@ import {createEvent, updateEvent, deleteEvent} from '../eventActions';
 }
 
 
-export default connect(mapState, actions)(EventDashboard);
+export default connect(
+  mapState,
+  actions
+  )(firestoreConnect([{collection: 'events' }])(EventDashboard));

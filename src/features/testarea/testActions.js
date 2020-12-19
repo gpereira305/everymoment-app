@@ -1,4 +1,4 @@
-import { asyncActionFinish, asyncActionStart } from "../async/asyncActions";
+import { asyncActionFinish } from "../async/asyncActions";
 import { ASYNC_ACTION_START } from "../async/asyncConstants";
 import { DECREMENT_COUNTER, INCREMENT_COUNTER } from "./testConstants";
 

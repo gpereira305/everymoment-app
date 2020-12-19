@@ -1,7 +1,8 @@
 import React from 'react'
-import ReactDatePicker from 'react-datepicker'
 import { Form, Label } from 'semantic-ui-react';
-import 'react-datepicker/dist/react-datepicker.css';
+import 'react-datepicker/dist/react-datepicker.css'
+import DatePicker from 'react-datepicker';
+
 
 
 
@@ -14,11 +15,10 @@ const DateInput = ({
     meta: {touched, error}, 
     ...rest
 }) => {
-
-
+    
     return (
         <Form.Field error={touched && !!error}>
-            <ReactDatePicker
+            <DatePicker
                 {...rest}
                 placeholderText={placeholder}
                 selected={input.value ?
@@ -38,3 +38,5 @@ const DateInput = ({
 }
 
 export default DateInput;
+
+

@@ -12,10 +12,10 @@ import { Image, List } from 'semantic-ui-react';
          return (
              <List.Item>
                  <Image 
-                 as='a'
-                 size='mini'
-                 circular src={attendee.photoURL}
-
+                    as='a'
+                    size='mini'
+                    circular 
+                    src={attendee.photoURL}
                  />
              </List.Item>
          )
