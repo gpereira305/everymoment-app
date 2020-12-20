@@ -124,3 +124,15 @@ body {
 .ui.form {
     padding: .5rem 0!important;
 }
+
+
+/* error message */
+
+.ui.basic.red.label {
+    background: none #db0606!important;
+    color: #fff!important;
+    border-color: #db2828!important;
+    display: flex;
+    margin: 1rem 0;
+    font-size: 1rem;
+}

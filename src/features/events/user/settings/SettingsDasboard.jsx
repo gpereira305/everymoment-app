@@ -6,12 +6,21 @@ import BasicPage from '../settings/BasicPage';
 import AboutPage from './AboutPage';
 import PhotosPage from './PhotosPage';
 import AccountPage from './AccountPage';
+import { connect } from 'react-redux';
+import {updatePassword} from '../../../auth/authActions';
 
 
 
+const actions = {
+    updatePassword
+};
 
+const mapState = (state) => ({
+    providerId: state.firebase.auth.isLoaded &&
+    state.firebase.auth.providerData[0].providerId
+})
 
- const SettingsDashboard = () => {
+ const SettingsDashboard = ({updatePassword, providerId}) => {
     return (
          
        <Grid>
@@ -36,7 +45,12 @@ import AccountPage from './AccountPage';
               />
               <Route
                   path='/settings/account'
-                  component={AccountPage}
+                  render={()=> <AccountPage 
+                      updatePassword={updatePassword}
+                      providerId={providerId}
+                   />}
+                  
+                  
               />
              </Switch>
             </Grid.Column>
@@ -49,4 +63,4 @@ import AccountPage from './AccountPage';
 
 
 
-export default SettingsDashboard;
+export default connect(mapState, actions)(SettingsDashboard);

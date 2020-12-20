@@ -1,167 +1,93 @@
-import cuid from 'cuid';
-import React, { Component } from 'react';
-import {reduxForm, Field} from 'redux-form';
-import {connect} from 'react-redux';
-import { Button, Form, Grid, Header, Segment} from 'semantic-ui-react';
-import {createEvent, updateEvent} from '../eventActions'; 
-import TextInput from '../../../app/common/form/TextInput';
-import TextArea from '../../../app/common/form/TextArea';
-import SelectInput from '../../../app/common/form/SelectInput';
-import {
-        composeValidators,
-        combineValidators,
-        isRequired,
-        hasLengthGreaterThan
-      } from 'revalidate';
-import DateInput from '../../../app/common/form/DateInput';
+ import React from 'react';
+ import { Segment, Header, Form, Divider, Label, Button, Icon } from 'semantic-ui-react';
+ import { Field, reduxForm } from 'redux-form';
+//  import {combineValidators, matchesField, isRequired, composeValidators} from 'revalidate';
+ import TextInput from '../../../app/common/form/TextInput';
+import { combineValidators, composeValidators, isRequired, matchesField } from 'revalidate';
 
-
-
-const  mapState = (state, ownProps) => {
-  const eventId = ownProps.match.params.id;
-
-
-  let event = {
-    title: '',
-    date: '',
-    city: '',
-    venue: '',
-    hostedBy: ''
-  }
-
-  if(eventId && state.events.length > 0){
-    event = state.events.filter(event => event.id === eventId)[0]
-  }
-
-  return {
-   initialValues: event
-  }
-}
-
-const actions = {
-  createEvent, updateEvent
-}
-
-
-const validate = combineValidators({
-  title: isRequired({message: 'The event title is required'}),
-  category: isRequired({message: 'The category is required'}),
-  description: composeValidators(isRequired({message: 'Please enter a description'}),
-  hasLengthGreaterThan(4)({message: 'Description needs to be at least 5 characters long'}))(),
-  city: isRequired('city'),
-  venue: isRequired('venue'),
-  date: isRequired('date')
-})
-
-
-const category = [
-    {key: 'drinks', text: 'Drinks', value: 'drinks'},
-    {key: 'culture', text: 'Culture', value: 'culture'},
-    {key: 'film', text: 'Film', value: 'film'},
-    {key: 'food', text: 'Food', value: 'food'},
-    {key: 'music', text: 'Music', value: 'music'},
-    {key: 'travel', text: 'Travel', value: 'travel'},
-];
-
- class EventForm extends Component {
  
-     onFormSubmit = (values) => {
-       if(this.props.initialValues.id){
-         this.props.updateEvent(values);
-         this.props.history.push(`/events/${this.props.initialValues.id}`)
-       }else{
-         const newEvent = {
-           ...values,
-           id: cuid(),
-           hostPhotoURL: '/assets/user.png',
-           hostedBy: 'Diana'
-         }
-        this.props.createEvent(newEvent);
-        this.props.history.push(`/events/${newEvent.id}`)
-       }
-     }
+
+  const validate = combineValidators({
+      newPassword1: isRequired({message: 'Please enter  a Password'}),
+      newPassword2: composeValidators(isRequired({message: 'Please confirm your password'}),
+      matchesField('newPassword1')({message: 'Password do not Match!'}))()
+  })
 
 
 
-
-    render() { 
-        const {
-          history, initialValues,
-          invalid, submitting,
-          pristine
-        } = this.props
-
-        return (
-           
-          <Grid>
-              <Grid.Column width={10}>
-                  <Segment>
-                     <Header sub color="blue" content="Event Details"/>
-                    <Form onSubmit={this.props.handleSubmit(this.onFormSubmit)}>
-                      <Field
-                        name="title"
-                        component={TextInput}
-                        placeholder="Give your event a name" 
-                      />      
-                      <Field
-                        name="category"
-                        component={SelectInput}
-                        options={category}
-                        placeholder="What is your event about" 
-                      />      
-                      <Field
-                        name="description"
-                        component={TextArea}
-                        rows={3}
-                        placeholder="Tell us about your event" 
-                      />   
-                       <Header sub color="blue" content="Event location details"/>   
-                      <Field
-                        name="city"
-                        component={TextInput}
-                        placeholder="Event City" 
-                      />      
-                      <Field
-                        name="venue"
-                        component={TextInput}
-                        placeholder="Event Venue" 
-                      />      
-                      <Field
-                        name="date"
-                        component={DateInput}
-                        // dateFormat="dd LLL yyyy h:mm a"
-                        dateFormat={(new Date(), 'yyyy-MM-dd')}
-                        showTimeSelect
-                        timeFormat="HH:mm"
-                        placeholder="Event Date" 
-                      /> 
-
-                      <Button 
-                        disabled={
-                        invalid || 
-                        submitting ||
-                        pristine}
-                        positive 
-                        type="submit">
-                        Submit
-                      </Button>
-                          <Button 
-                            onClick={
-                              initialValues.id
-                              ? () => history.push(`/events/${initialValues.id}`)
-                              : () => history.push('/events')
-                            }
-                            type="button">
-                            Cancel
-                        </Button>
-                    </Form>
-                  </Segment>
-              </Grid.Column>
-          </Grid>
-             
-
-        )}}
+ const AccountPage = ({
+       error, invalid, 
+       submitting,
+       handleSubmit, 
+       updatePassword,
+       providerId,
+       }) => {
 
 
-export default connect(mapState, actions)(reduxForm({form: 'eventForm', validate})(EventForm));
-
+   return (
+     <Segment>
+       <Header dividing size="large" content="Account" />
+       {providerId && providerId === 'password' &&
+       <div>
+         <Header color="teal" sub content="Change password" />
+         <p>Use this form to update your account settings</p>
+         <Form onSubmit={handleSubmit(updatePassword)}>
+           <Field
+             width={8}
+             name="newPassword1"
+             type="password"
+             pointing="left"
+             inline={true}
+             component={TextInput}
+             basic={true}
+             placeholder="New Password"
+           />
+           <Field
+             width={8}
+             name="newPassword2"
+             type="password"
+             inline={true}
+             basic={true}
+             pointing="left"
+             component={TextInput}
+             placeholder="Confirm Password"
+           />
+           {error && (
+             <Label basic color="red">
+               {error}
+             </Label>
+           )}
+           <Divider />
+           <Button 
+              disabled={invalid || submitting}
+              size="large" 
+              positive content="Update Password" />
+         </Form>
+       </div>
+    }
+    {providerId && providerId === 'facebook.com' &&
+       <div>
+         <Header color="teal" sub content="Facebook Account" />
+         <p>Please visit Facebook to update your account settings</p>
+         <Button type="button" color="facebook">
+           <Icon name="facebook" />
+           Go to Facebook
+         </Button>
+       </div>
+    }
+     
+    {providerId && providerId === 'google.com' &&
+       <div>
+         <Header color="teal" sub content="Google Account" />
+         <p>Please visit Google to update your account settings</p>
+         <Button type="button" color="google plus">
+           <Icon name="google plus" />
+           Go to Google
+         </Button>
+       </div>
+    } 
+     </Segment>
+   );
+ };
+ 
+ export default reduxForm({ form: 'account', validate })(AccountPage);
